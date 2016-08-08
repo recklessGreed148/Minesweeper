@@ -48,17 +48,75 @@ public class tnt_Listeners implements Listener
         Inventory inv = event.getClickedInventory();
         Player player = (Player) event.getWhoClicked();
         ItemStack clickedItem = event.getCurrentItem();
-        if(clickedItem.getType() == Material.COAL_BLOCK)
+        if(inv.getName().equals("Feldgröße"))
         {
+            if (clickedItem.getType() == Material.COAL_BLOCK)
+            {
+                if (event.getSlot() / 9 == 1)
+                {
 
-        }
-        else if(clickedItem.getType() == Material.REDSTONE_BLOCK)
-        {
+                }
+                else if (event.getSlot() / 9 == 3)
+                {
 
-        }
-        else if(clickedItem.getType() == Material.EMERALD_BLOCK)
-        {
+                }
+                else if (event.getSlot() / 9 == 5)
+                {
 
+                }
+
+            }
+            else if (clickedItem.getType() == Material.REDSTONE_BLOCK)
+            {
+                ItemStack copyOf;
+                if (event.getSlot() / 9 == 1)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() >= 6)
+                        copyOf.setAmount(copyOf.getAmount()-1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+                else if (event.getSlot() / 9 == 3)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() >= 6)
+                        copyOf.setAmount(copyOf.getAmount()-1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+                else if (event.getSlot() / 9 == 5)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() >= (inv.getItem(13).getAmount() * inv.getItem(31).getAmount())/10)
+                        copyOf.setAmount(copyOf.getAmount()-1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+            }
+            else if (clickedItem.getType() == Material.EMERALD_BLOCK)
+            {
+                ItemStack copyOf;
+                if (event.getSlot() / 9 == 1)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() <= 11)
+                        copyOf.setAmount(copyOf.getAmount()+1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+                else if (event.getSlot() / 9 == 3)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() <= 11)
+                        copyOf.setAmount(copyOf.getAmount()+1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+                else if (event.getSlot() / 9 == 5)
+                {
+                    copyOf = event.getCurrentItem().clone();
+                    if(copyOf.getAmount() < (inv.getItem(13).getAmount() * inv.getItem(31).getAmount())*0.9)
+                        copyOf.setAmount(copyOf.getAmount()+1);
+                    inv.setItem(event.getSlot(), copyOf);
+                }
+            }
+            event.setCancelled(true);
         }
     }
 
