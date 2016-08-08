@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -19,6 +20,10 @@ public class tnt_Listeners implements Listener
 {
     tnt_Listeners instance;
     tnt_Main mainClass;
+
+    ItemStack widthBlock = new ItemStack(Material.COAL_BLOCK, 5);
+    ItemStack heightBlock = new ItemStack(Material.COAL_BLOCK, 5);
+    ItemStack tntCount = new ItemStack(Material.COAL_BLOCK,10);
 
     public tnt_Listeners(tnt_Main main)
     {
@@ -37,6 +42,26 @@ public class tnt_Listeners implements Listener
 
     }
 
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event)
+    {
+        Inventory inv = event.getClickedInventory();
+        Player player = (Player) event.getWhoClicked();
+        ItemStack clickedItem = event.getCurrentItem();
+        if(clickedItem.getType() == Material.COAL_BLOCK)
+        {
+
+        }
+        else if(clickedItem.getType() == Material.REDSTONE_BLOCK)
+        {
+
+        }
+        else if(clickedItem.getType() == Material.EMERALD_BLOCK)
+        {
+
+        }
+    }
+
     public Inventory createFieldInventory()
     {
         Inventory creator = Bukkit.createInventory(null, 63, "Feldgröße");
@@ -44,8 +69,7 @@ public class tnt_Listeners implements Listener
         ItemStack minus = new ItemStack(Material.REDSTONE_BLOCK,1);
         plus.getItemMeta().setDisplayName("+1");
         minus.getItemMeta().setDisplayName("-1");
-        ItemStack width = new ItemStack(Material.COAL_BLOCK, 1);
-        ItemStack height = new ItemStack(Material.COAL_BLOCK, 1);
+
         creator.setItem(11, minus);
         creator.setItem(13, widthBlock);
         creator.setItem(15, plus);
@@ -55,7 +79,7 @@ public class tnt_Listeners implements Listener
         creator.setItem(47, minus);
         creator.setItem(49, tntCount);
         creator.setItem(51, plus);
-
+        return creator;
     }
 
 
