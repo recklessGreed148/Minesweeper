@@ -1,0 +1,8 @@
+name: CraftSweeper
+version: 1.0
+description: Classic Windows MineSweeper in Minecraft
+author: recklessGreed
+
+main: de.recklessGreed.tnt_Main
+
+commands:

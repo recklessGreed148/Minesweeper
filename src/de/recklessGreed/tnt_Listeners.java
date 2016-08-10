@@ -7,7 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -31,15 +33,26 @@ public class tnt_Listeners implements Listener
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event)
+    public void onJoin(PlayerLoginEvent event)
     {
         Player player = event.getPlayer();
+        player.openInventory(createFieldInventory());
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event)
     {
 
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event)
+    {
+        Inventory inv = event.getInventory();
+        if(inv.getName().equals("Feldgröße"))
+        {
+            
+        }
     }
 
     @EventHandler
@@ -123,6 +136,7 @@ public class tnt_Listeners implements Listener
     public Inventory createFieldInventory()
     {
         Inventory creator = Bukkit.createInventory(null, 63, "Feldgröße");
+
         ItemStack plus = new ItemStack(Material.EMERALD_BLOCK, 1);
         ItemStack minus = new ItemStack(Material.REDSTONE_BLOCK,1);
         plus.getItemMeta().setDisplayName("+1");
@@ -137,6 +151,8 @@ public class tnt_Listeners implements Listener
         creator.setItem(47, minus);
         creator.setItem(49, tntCount);
         creator.setItem(51, plus);
+
+
         return creator;
     }
 

@@ -1,5 +1,6 @@
 package de.recklessGreed;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -25,6 +26,7 @@ public class tnt_Main extends JavaPlugin
     {
         instance = this;
         tnt_events = new tnt_Listeners(instance);
+        Bukkit.getServer().getPluginManager().registerEvents(tnt_events,this);
 
         super.onEnable();
     }
