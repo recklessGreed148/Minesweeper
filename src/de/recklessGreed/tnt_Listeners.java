@@ -23,20 +23,26 @@ public class tnt_Listeners implements Listener
     tnt_Listeners instance;
     tnt_Main mainClass;
 
-    ItemStack widthBlock = new ItemStack(Material.COAL_BLOCK, 5);
-    ItemStack heightBlock = new ItemStack(Material.COAL_BLOCK, 5);
-    ItemStack tntCount = new ItemStack(Material.COAL_BLOCK,10);
-
     public tnt_Listeners(tnt_Main main)
     {
         mainClass = main;
     }
 
     @EventHandler
-    public void onJoin(PlayerLoginEvent event)
+    public void onJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
-        player.openInventory(createFieldInventory());
+
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(mainClass, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                player.openInventory(createFieldInventory(player));
+            }
+        },40L);
+
     }
 
     @EventHandler
@@ -133,14 +139,24 @@ public class tnt_Listeners implements Listener
         }
     }
 
-    public Inventory createFieldInventory()
+    public Inventory createFieldInventory(Player player)
     {
-        Inventory creator = Bukkit.createInventory(null, 63, "Feldgröße");
+        Inventory creator = Bukkit.createInventory(player, 54, "Feldgröße");
+
 
         ItemStack plus = new ItemStack(Material.EMERALD_BLOCK, 1);
         ItemStack minus = new ItemStack(Material.REDSTONE_BLOCK,1);
         plus.getItemMeta().setDisplayName("+1");
         minus.getItemMeta().setDisplayName("-1");
+
+
+        ItemStack widthBlock = new ItemStack(Material.COAL_BLOCK, 5);
+        ItemStack heightBlock = new ItemStack(Material.COAL_BLOCK, 5);
+        ItemStack tntCount = new ItemStack(Material.COAL_BLOCK,10);
+
+        widthBlock.getItemMeta().setDisplayName("Feld Breite");
+        heightBlock.getItemMeta().setDisplayName("Feld Höhe");
+        tntCount.getItemMeta().setDisplayName("Anzahl an Minen");
 
         creator.setItem(11, minus);
         creator.setItem(13, widthBlock);
@@ -151,7 +167,6 @@ public class tnt_Listeners implements Listener
         creator.setItem(47, minus);
         creator.setItem(49, tntCount);
         creator.setItem(51, plus);
-
 
         return creator;
     }
